@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك كيمياء - التعليم المتطور</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --easy: #2ecc71;
+            --medium: #f39c12;
+            --hard: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --card-bg: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* التصميم الشريطي */
+        nav {
+            background: rgba(26, 42, 108, 0.95);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* قسم الترحيب */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s, background 0.3s;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            background: #c0392b;
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.6);
+        }
+
+        /* الأقسام */
+        .section {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.05);
+            margin: 50px 0;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--light);
+            position: relative;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 50%;
+            transform: translateX(50%);
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* بطاقات الخدمات */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            margin-bottom: 1.5rem;
+            color: rgba(236, 240, 241, 0.8);
+        }
+
+        /* بطاقات المستويات */
+        .level-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .level-card.easy {
+            border-top: 5px solid var(--easy);
+        }
+
+        .level-card.medium {
+            border-top: 5px solid var(--medium);
+        }
+
+        .level-card.hard {
+            border-top: 5px solid var(--hard);
+        }
+
+        .level-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .level-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .level-desc {
+            color: rgba(236, 240, 241, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        /* التذييل */
+        footer {
+            background: var(--dark);
+            padding: 3rem 0;
+            text-align: center;
+            margin-top: 100px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-credit {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(236, 240, 241, 0.7);
+        }
+
+        /* الرسوم المتحركة */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* تأثيرات الخلفية */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+
+        /* التجاوب */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* أنماط خاصة للأسئلة */
+        .question-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .option.correct {
+            background: rgba(46, 204, 113, 0.3);
+            border: 1px solid var(--easy);
+        }
+
+        .option.incorrect {
+            background: rgba(231, 76, 60, 0.3);
+            border: 1px solid var(--hard);
+        }
+
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid var(--easy);
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid var(--hard);
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- تأثيرات الخلفية -->
+    <div class="floating-elements">
+        <div class="floating-element" style="width: 100px; height: 100px; top: 10%; right: 10%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="width: 150px; height: 150px; top: 20%; left: 5%; animation-delay: 2s;"></div>
+        <div class="floating-element" style="width: 80px; height: 80px; bottom: 20%; right: 20%; animation-delay: 4s;"></div>
+        <div class="floating-element" style="width: 120px; height: 120px; bottom: 10%; left: 10%; animation-delay: 6s;"></div>
+    </div>
+
+    <!-- الشريط العلوي -->
+    <nav>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-flask"></i> بنك كيمياء
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#levels">المستويات</a></li>
+                <li><a href="#chapters">الفصول</a></li>
+                <li><a href="#about">عن الموقع</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- الصفحة الترحيبية -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>مرحباً بك في عالم الكيمياء!</h1>
+            <p>اختباراتنا صممت لتختبر معلوماتك، تنمي مهاراتك، وتجعلك تكتشف أسرار العناصر والتفاعلات. استعد للتحدي وابدأ رحلتك العلمية الآن!</p>
+            <a href="#levels" class="cta-button">ابدأ الاختبارات</a>
+        </div>
+    </section>
+
+    <!-- قسم اختيار مستوى الصعوبة -->
+    <section id="levels" class="section">
+        <div class="container">
+            <h2 class="section-title">اختر مستوى الصعوبة</h2>
+            <div class="services-grid">
+                <div class="level-card easy">
+                    <div class="level-icon">🟢</div>
+                    <h3 class="level-title">المستوى السهل</h3>
+                    <p class="level-desc">(تذكر - فهم) - مناسب للمبتدئين</p>
+                    <p>أسئلة تركز على المفاهيم الأساسية والاستدعاء المباشر للمعلومات</p>
+                    <button class="cta-button" style="margin-top: 1rem;">ابدأ المستوى السهل</button>
+                </div>
+                <div class="level-card medium">
+                    <div class="level-icon">🟠</div>
+                    <h3 class="level-title">المستوى المتوسط</h3>
+                    <p class="level-desc">(تحليل - تطبيق) - مناسب للمتوسطين</p>
+                    <p>أسئلة تتطلب تحليل العلاقات وتطبيق المعرفة في مواقف جديدة</p>
+                    <button class="cta-button" style="margin-top: 1rem;">ابدأ المستوى المتوسط</button>
+                </div>
+                <div class="level-card hard">
+                    <div class="level-icon">🔴</div>
+                    <h3 class="level-title">المستوى الصعب</h3>
+                    <p class="level-desc">(تحليل عميق - تقييم - إبداع) - مناسب للمتقدمين</p>
+                    <p>أسئلة تتطلب تفكيرًا نقديًا وتقييمًا للمعلومات وإبداعًا في الحلول</p>
+                    <button class="cta-button" style="margin-top: 1rem;">ابدأ المستوى الصعب</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الفصول -->
+    <section id="chapters" class="section">
+        <div class="container">
+            <h2 class="section-title">الفصول الدراسية</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🧪</div>
+                    <h3>الفصل الأول: أساسيات الكيمياء</h3>
+                    <p>المادة وخصائصها، الحالات الفيزيائية، التغيرات الكيميائية والفيزيائية</p>
+                    <button class="cta-button" style="margin-top: 1rem;">ابدأ الفصل الأول</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚗️</div>
+                    <h3>الفصل الثاني: الذرة والجدول الدوري</h3>
+                    <p>النماذج الذرية، النظائر، الجدول الدوري وتصنيف العناصر</p>
+                    <button class="cta-button" style="margin-top: 1rem;">ابدأ الفصل الثاني</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔬</div>
+                    <h3>الفصل الثالث: الروابط الكيميائية</h3>
+                    <p>الروبات الأيونية، التساهمية، الفلزية، والأشكال الجزيئية</p>
+                    <button class="cta-button" style="margin-top: 1rem;">ابدأ الفصل الثالث</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم النتائج -->
+    <section id="results" class="section">
+        <div class="container">
+            <h2 class="section-title">نتائج الاختبارات</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>آخر النتائج</h3>
+                    <p>عرض أحدث نتائج الاختبارات</p>
+                    <button class="cta-button" style="margin-top: 1rem;">عرض النتائج</button>
+                </div>
+                <div class="service-card">
+                    <h3>التقارير</h3>
+                    <p>تقارير مفصلة عن الأداء</p>
+                    <button class="cta-button" style="margin-top: 1rem;">تحميل التقارير</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- مثال على سؤال -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">جرب سؤالاً الآن</h2>
+            <div class="question-container">
+                <div class="question-text">1) علم الكيمياء هو علم يدرس:</div>
+                <div class="options-container">
+                    <div class="option" data-correct="false">أ) الفضاء</div>
+                    <div class="option" data-correct="true">ب) تركيب المادة وتغيراتها</div>
+                    <div class="option" data-correct="false">ج) النباتات</div>
+                </div>
+                <div class="feedback correct">إجابة صحيحة! علم الكيمياء يدرس تركيب المادة وتغيراتها.</div>
+                <div class="feedback incorrect">إجابة خاطئة! حاول مرة أخرى.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2024 بنك كيمياء - جميع الحقوق محفوظة</p>
+                <p>منصة التعليم الكيميائي المتطور</p>
+                <div class="footer-credit">
+                    تم إنشاء بنك الأسئلة بواسطة الطالب حمد السعدان وبإشراف الأستاذ عبدالله حمدي
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // تأثير التمرير السلس
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // تأثير الظهور عند التمرير
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // مراقبة العناصر لإضافة تأثيرات
+        document.querySelectorAll('.service-card, .level-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // نظام الأسئلة التفاعلي
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                const feedbackCorrect = this.parentElement.nextElementSibling;
+                const feedbackIncorrect = feedbackCorrect.nextElementSibling;
+                
+                // إزالة التحديد من جميع الخيارات
+                this.parentElement.querySelectorAll('.option').forEach(opt => {
+                    opt.classList.remove('correct', 'incorrect');
+                });
+                
+                // إظهار التغذية الراجعة المناسبة
+                if (isCorrect) {
+                    this.classList.add('correct');
+                    feedbackCorrect.style.display = 'block';
+                    feedbackIncorrect.style.display = 'none';
+                } else {
+                    this.classList.add('incorrect');
+                    feedbackCorrect.style.display = 'none';
+                    feedbackIncorrect.style.display = 'block';
+                    
+                    // إظهار الإجابة الصحيحة
+                    this.parentElement.querySelector('.option[data-correct="true"]').classList.add('correct');
+                }
+            });
+        });
+
+        // إنشاء تأثيرات عشوائية للخلفية
+        function createFloatingElements() {
+            const container = document.querySelector('.floating-elements');
+            const symbols = ['🧪', '⚗️', '🔬', '🧫', '🧴', '💧', '🔥', '💨'];
+            
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.width = `${Math.random() * 80 + 40}px`;
+                element.style.height = element.style.width;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.right = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${Math.random() * 15}s`;
+                element.style.animationDuration = `${Math.random() * 20 + 10}s`;
+                element.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                element.style.fontSize = `${Math.random() * 20 + 10}px`;
+                element.style.display = 'flex';
+                element.style.alignItems = 'center';
+                element.style.justifyContent = 'center';
+                container.appendChild(element);
+            }
+        }
+
+        createFloatingElements();
+    </script>
+</body>
+</html>
